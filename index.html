@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Love Engine — Deep Emotional Intelligence</title>
+  <meta name="description"
+    content="AI-powered love compatibility analysis using Deep Emotional Intelligence Model v3.2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+
+<body>
+  <!-- Custom Cursor -->
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- Three.js Background Canvas -->
+  <canvas id="canvas-bg" aria-hidden="true"></canvas>
+
+  <!-- 2D Particle Overlay -->
+  <canvas id="particle-overlay" aria-hidden="true"></canvas>
+
+  <!-- ========== LANDING SECTION ========== -->
+  <section id="landing" class="screen active">
+    <div class="landing-content">
+      <div class="badge" id="landing-badge">
+        <span class="badge-dot"></span>
+        Model v3.2 — Live
+      </div>
+      <h1 id="landing-title">AI Love Engine</h1>
+      <p id="landing-subtitle">Powered by Deep Emotional Intelligence Model v3.2</p>
+      <p id="landing-desc" class="landing-desc">
+        Our neural network analyzes micro-behavioral patterns to predict
+        romantic compatibility with <strong>98.7% accuracy</strong>.
+      </p>
+      <button id="cta-start" class="btn-primary magnetic-btn">
+        <span class="btn-text">Start Analysis</span>
+        <span class="btn-glow"></span>
+      </button>
+      <div id="landing-stats" class="landing-stats">
+        <div class="stat">
+          <span class="stat-value">2.4M+</span>
+          <span class="stat-label">Analyses Run</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">98.7%</span>
+          <span class="stat-label">Model Accuracy</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">v3.2</span>
+          <span class="stat-label">DEIM Build</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== QUESTION FLOW ========== -->
+  <section id="questions" class="screen">
+    <div class="questions-container">
+      <!-- Progress Bar -->
+      <div class="progress-wrapper">
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <span id="progress-label" class="progress-label">Step 1 of 5</span>
+      </div>
+
+      <!-- Question Cards -->
+      <div id="question-cards" class="question-cards">
+        <!-- Q1 -->
+        <div class="question-card active" data-step="0">
+          <div class="q-icon">💬</div>
+          <h2 class="q-title">How often do you talk?</h2>
+          <p class="q-sub">Frequency of your conversations</p>
+          <div class="slider-wrapper">
+            <input type="range" min="1" max="5" value="3" class="q-slider" id="q-slider-0" />
+            <div class="slider-labels">
+              <span>Rarely</span>
+              <span>Sometimes</span>
+              <span>Often</span>
+              <span>Daily</span>
+              <span>24/7</span>
+            </div>
+          </div>
+          <div class="slider-value-display" id="q-value-0">Often</div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card" data-step="1">
+          <div class="q-icon">🤝</div>
+          <h2 class="q-title">How often do you meet?</h2>
+          <p class="q-sub">In-person interactions per week</p>
+          <div class="slider-wrapper">
+            <input type="range" min="1" max="5" value="3" class="q-slider" id="q-slider-1" />
+            <div class="slider-labels">
+              <span>Never</span>
+              <span>Monthly</span>
+              <span>Weekly</span>
+              <span>Often</span>
+              <span>Daily</span>
+            </div>
+          </div>
+          <div class="slider-value-display" id="q-value-1">Weekly</div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card" data-step="2">
+          <div class="q-icon">📞</div>
+          <h2 class="q-title">How often do you call?</h2>
+          <p class="q-sub">Voice/video call frequency</p>
+          <div class="slider-wrapper">
+            <input type="range" min="1" max="5" value="3" class="q-slider" id="q-slider-2" />
+            <div class="slider-labels">
+              <span>Never</span>
+              <span>Rarely</span>
+              <span>Sometimes</span>
+              <span>Often</span>
+              <span>Daily</span>
+            </div>
+          </div>
+          <div class="slider-value-display" id="q-value-2">Sometimes</div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card" data-step="3">
+          <div class="q-icon">👀</div>
+          <h2 class="q-title">Eye contact level?</h2>
+          <p class="q-sub">How intense is the eye contact</p>
+          <div class="slider-wrapper">
+            <input type="range" min="1" max="5" value="3" class="q-slider" id="q-slider-3" />
+            <div class="slider-labels">
+              <span>Avoids</span>
+              <span>Shy</span>
+              <span>Normal</span>
+              <span>Intense</span>
+              <span>🔥</span>
+            </div>
+          </div>
+          <div class="slider-value-display" id="q-value-3">Normal</div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card" data-step="4">
+          <div class="q-icon">💌</div>
+          <h2 class="q-title">Who texts first?</h2>
+          <p class="q-sub">Initiation of conversations</p>
+          <div class="slider-wrapper">
+            <input type="range" min="1" max="5" value="3" class="q-slider" id="q-slider-4" />
+            <div class="slider-labels">
+              <span>Always Me</span>
+              <span>Mostly Me</span>
+              <span>Equal</span>
+              <span>Mostly Them</span>
+              <span>Always Them</span>
+            </div>
+          </div>
+          <div class="slider-value-display" id="q-value-4">Equal</div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="q-nav">
+        <button id="q-prev" class="btn-secondary" disabled>Back</button>
+        <button id="q-next" class="btn-primary magnetic-btn">
+          <span class="btn-text">Next</span>
+          <span class="btn-glow"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== INPUT SECTION ========== -->
+  <section id="input" class="screen">
+    <div class="input-container">
+      <div class="input-icon">❤️</div>
+      <h2 class="input-title">One last thing...</h2>
+      <p class="input-sub">Our model needs this for the final calibration</p>
+      <div class="floating-input-wrapper">
+        <input type="text" id="crush-input" class="floating-input" placeholder=" " autocomplete="off" />
+        <label for="crush-input" class="floating-label">Enter your crush's name ❤️</label>
+        <div class="input-glow"></div>
+      </div>
+      <button id="submit-crush" class="btn-primary magnetic-btn">
+        <span class="btn-text">Run Analysis</span>
+        <span class="btn-glow"></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ========== PROCESSING SECTION ========== -->
+  <section id="processing" class="screen">
+    <div class="processing-container">
+      <!-- Futuristic Loader -->
+      <div class="loader-ring">
+        <div class="loader-ring-inner"></div>
+        <div class="loader-heart">💗</div>
+      </div>
+
+      <!-- Status Text (typing effect) -->
+      <p id="process-status" class="process-status"></p>
+
+      <!-- Progress Bar -->
+      <div class="process-progress-wrapper">
+        <div class="process-progress-bar">
+          <div id="process-progress-fill" class="process-progress-fill"></div>
+        </div>
+        <span id="process-percent" class="process-percent">0%</span>
+      </div>
+
+      <!-- Fake Metrics -->
+      <div id="process-metrics" class="process-metrics">
+        <div class="metric-card">
+          <span class="metric-label">Model Accuracy</span>
+          <span class="metric-value" id="metric-accuracy">98.7%</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Emotional Confidence</span>
+          <span class="metric-value" id="metric-confidence">—</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Neural Layers</span>
+          <span class="metric-value" id="metric-layers">0 / 128</span>
+        </div>
+      </div>
+
+      <!-- Fake Pulse Graph -->
+      <div class="pulse-graph" id="pulse-graph">
+        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+          <polyline id="pulse-line" fill="none" stroke="url(#pulseGrad)" stroke-width="2" points=""></polyline>
+          <defs>
+            <linearGradient id="pulseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff2d7b;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RESULT SECTION ========== -->
+  <section id="result" class="screen">
+    <div class="result-container">
+      <h2 class="result-label">Love Score</h2>
+      <div class="result-score-wrap">
+        <span id="result-score" class="result-score">0</span>
+        <span class="result-percent">%</span>
+      </div>
+      <p id="result-name" class="result-name"></p>
+      <div id="heart-burst" class="heart-burst"></div>
+    </div>
+  </section>
+
+  <!-- ========== PRANK REVEAL ========== -->
+  <section id="reveal" class="screen">
+    <div class="reveal-container">
+      <div class="reveal-emoji">😂</div>
+      <h1 id="reveal-text" class="reveal-text">Gotcha!</h1>
+      <p class="reveal-sub">This was a prank! No AI was harmed in the making of this analysis.</p>
+      <p class="reveal-note">Your answers were totally random. Love can't be calculated by code 💕</p>
+      <button id="reveal-restart" class="btn-primary magnetic-btn">
+        <span class="btn-text">Try Again</span>
+        <span class="btn-glow"></span>
+      </button>
+    </div>
+    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  </section>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+
+</html>

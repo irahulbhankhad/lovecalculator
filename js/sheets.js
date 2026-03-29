@@ -11,7 +11,7 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwR-x5fapUvr2
  * Send crush data to Google Sheets
  * Called when the user submits their crush's name
  */
-export function sendToSheets({ crushName, answers, score }) {
+export function sendToSheets({ userName, crushName, answers, score }) {
   // Don't send if URL hasn't been configured
   if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
     console.warn('[Sheets] Google Script URL not configured. Skipping send.');
@@ -19,6 +19,7 @@ export function sendToSheets({ crushName, answers, score }) {
   }
 
   const payload = {
+    userName: userName || 'Unknown',
     crushName: crushName || 'Unknown',
     answers: answers || [],
     score: score ?? 0,

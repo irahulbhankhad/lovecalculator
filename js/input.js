@@ -1,15 +1,16 @@
 /**
- * input.js — Crush Name Input Section
+ * input.js — Name & Crush Name Input Section
  * Floating label animation, glowing border, validation.
  */
 import gsap from 'gsap';
 
 /**
  * Initialize input section
- * @param {Function} onSubmit — called with the crush name string
+ * @param {Function} onSubmit — called with { userName, crushName } object
  */
 export function initInput(onSubmit) {
-  const input = document.getElementById('crush-input');
+  const userNameInput = document.getElementById('user-name-input');
+  const crushInput = document.getElementById('crush-input');
   const submitBtn = document.getElementById('submit-crush');
 
   // Entrance animation
@@ -20,32 +21,49 @@ export function initInput(onSubmit) {
   );
 
   submitBtn.addEventListener('click', () => {
-    const name = input.value.trim();
-    if (!name) {
-      // Shake effect for empty input
-      gsap.to(input, {
+    const userName = userNameInput.value.trim();
+    const crushName = crushInput.value.trim();
+
+    // Validate user name
+    if (!userName) {
+      gsap.to(userNameInput, {
         x: [-8, 8, -6, 6, -3, 3, 0],
         duration: 0.5,
         ease: 'power2.out',
       });
-      input.focus();
+      userNameInput.focus();
       return;
     }
-    if (onSubmit) onSubmit(name);
+
+    // Validate crush name
+    if (!crushName) {
+      gsap.to(crushInput, {
+        x: [-8, 8, -6, 6, -3, 3, 0],
+        duration: 0.5,
+        ease: 'power2.out',
+      });
+      crushInput.focus();
+      return;
+    }
+
+    if (onSubmit) onSubmit({ userName, crushName });
   });
 
-  // Also allow Enter key
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      submitBtn.click();
-    }
+  // Also allow Enter key on both inputs
+  [userNameInput, crushInput].forEach((input) => {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        submitBtn.click();
+      }
+    });
   });
 }
 
 /**
- * Reset input field
+ * Reset input fields
  */
 export function resetInput() {
+  document.getElementById('user-name-input').value = '';
   document.getElementById('crush-input').value = '';
 }
 

@@ -7,10 +7,11 @@
   <title>AI Love Engine — Deep Emotional Intelligence</title>
   <meta name="description"
     content="AI-powered love compatibility analysis using Deep Emotional Intelligence Model v3.2" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="/styles/main.css" />
 </head>
@@ -183,6 +184,11 @@
       <h2 class="input-title">One last thing...</h2>
       <p class="input-sub">Our model needs this for the final calibration</p>
       <div class="floating-input-wrapper">
+        <input type="text" id="user-name-input" class="floating-input" placeholder=" " autocomplete="off" />
+        <label for="user-name-input" class="floating-label">Enter your name 🧑</label>
+        <div class="input-glow"></div>
+      </div>
+      <div class="floating-input-wrapper">
         <input type="text" id="crush-input" class="floating-input" placeholder=" " autocomplete="off" />
         <label for="crush-input" class="floating-label">Enter your crush's name ❤️</label>
         <div class="input-glow"></div>
@@ -264,6 +270,11 @@
       <div class="reveal-emoji">😂</div>
       <h1 id="reveal-text" class="reveal-text">Gotcha!</h1>
       <p class="reveal-sub">This was a prank! Your crush name has been successfully captured 😜</p>
+      <div class="reveal-names" id="reveal-names">
+        <span class="reveal-user-name" id="reveal-user-name"></span>
+        <span class="reveal-heart">💘</span>
+        <span class="reveal-crush-name" id="reveal-crush-name"></span>
+      </div>
       <p class="reveal-note">We just extracted your secret… 👀</p>
       <p class="reveal-note">Don't worry — your secret is safe… for now 😏 💕</p>
       <p class="reveal-note">Next time, don't trust random AI tools so easily 🤖💘</p>
@@ -274,6 +285,12 @@
     </div>
     <canvas id="confetti-canvas" aria-hidden="true"></canvas>
   </section>
+
+  <!-- ========== BUILT BY FOOTER ========== -->
+  <footer id="built-by" class="built-by-footer">
+    <span class="built-by-label">Built by</span>
+    <span class="built-by-name">Rahul Bhankhad</span>
+  </footer>
 
   <script type="module" src="/js/main.js"></script>
 </body>

@@ -10,9 +10,15 @@ let confettiAnimId;
 
 /**
  * Show the prank reveal with confetti
+ * @param {string} userName — the user's name
+ * @param {string} crushName — the crush's name
  * @param {Function} onRestart — called when user clicks "Try Again"
  */
-export function showReveal(onRestart) {
+export function showReveal(userName, crushName, onRestart) {
+  // Populate the names
+  document.getElementById('reveal-user-name').textContent = userName;
+  document.getElementById('reveal-crush-name').textContent = crushName;
+
   // Entrance animation
   gsap.fromTo(
     '.reveal-container',
@@ -107,6 +113,8 @@ function stopConfetti() {
  */
 export function resetReveal() {
   stopConfetti();
+  document.getElementById('reveal-user-name').textContent = '';
+  document.getElementById('reveal-crush-name').textContent = '';
 }
 
 export default { showReveal, resetReveal };

@@ -17,6 +17,7 @@ import { sendToSheets } from './sheets.js';
 // ---- Global State ----
 const state = {
   answers: [],
+  userName: '',
   crushName: '',
   score: 0,
 };
@@ -57,22 +58,24 @@ function onQuestionsComplete(answers) {
 /**
  * 3. Input → Processing
  */
-function onCrushSubmit(name) {
-  state.crushName = name;
+function onCrushSubmit({ userName, crushName }) {
+  state.userName = userName;
+  state.crushName = crushName;
   showScreen('processing');
 
   // Switch 3D background to celebration mode (tree + teddy)
   switchToCelebration();
 
-  // Send crush name + answers to Google Sheets (silently)
+  // Send user name + crush name + answers to Google Sheets (silently)
   sendToSheets({
+    userName: state.userName,
     crushName: state.crushName,
     answers: state.answers,
     score: 0, // Score not calculated yet
   });
 
   startProcessing(
-    { answers: state.answers, crushName: state.crushName },
+    { answers: state.answers, crushName: state.crushName, userName: state.userName },
     onProcessingComplete
   );
 }
@@ -83,7 +86,7 @@ function onCrushSubmit(name) {
 function onProcessingComplete(score) {
   state.score = score;
   showScreen('result');
-  showResult(score, state.crushName, onRevealTime);
+  showResult(score, state.userName, state.crushName, onRevealTime);
 }
 
 /**
@@ -91,7 +94,7 @@ function onProcessingComplete(score) {
  */
 function onRevealTime() {
   showScreen('reveal');
-  showReveal(onRestart);
+  showReveal(state.userName, state.crushName, onRestart);
 }
 
 /**
@@ -100,6 +103,7 @@ function onRevealTime() {
 function onRestart() {
   // Reset everything
   state.answers = [];
+  state.userName = '';
   state.crushName = '';
   state.score = 0;
 

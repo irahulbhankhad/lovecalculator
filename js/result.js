@@ -7,15 +7,16 @@ import gsap from 'gsap';
 /**
  * Show the love score result
  * @param {number} score — the love percentage (0–100)
+ * @param {string} userName — the user's name
  * @param {string} crushName — the crush's name
  * @param {Function} onReveal — called after a delay to trigger prank reveal
  */
-export function showResult(score, crushName, onReveal) {
+export function showResult(score, userName, crushName, onReveal) {
   const scoreEl = document.getElementById('result-score');
   const nameEl = document.getElementById('result-name');
 
   scoreEl.textContent = '0';
-  nameEl.textContent = `You & ${crushName}`;
+  nameEl.textContent = `${userName} & ${crushName}`;
 
   // Animate number counter with GSAP
   const counter = { val: 0 };

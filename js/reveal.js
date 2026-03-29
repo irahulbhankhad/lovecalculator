@@ -1,12 +1,14 @@
 /**
  * reveal.js — Prank Reveal Screen
  * Confetti burst, glitch effect, and restart handler.
+ * Uses AbortController to prevent duplicate listeners on restart.
  */
 import gsap from 'gsap';
 
 let confettiCanvas, confettiCtx;
 let confettiPieces = [];
 let confettiAnimId;
+let abortController = null;
 
 /**
  * Show the prank reveal with confetti
@@ -15,6 +17,11 @@ let confettiAnimId;
  * @param {Function} onRestart — called when user clicks "Try Again"
  */
 export function showReveal(userName, crushName, onRestart) {
+  // Abort previous listeners
+  if (abortController) abortController.abort();
+  abortController = new AbortController();
+  const signal = abortController.signal;
+
   // Populate the names
   document.getElementById('reveal-user-name').textContent = userName;
   document.getElementById('reveal-crush-name').textContent = crushName;
@@ -29,11 +36,11 @@ export function showReveal(userName, crushName, onRestart) {
   // Start confetti
   startConfetti();
 
-  // Restart button
+  // Restart button — single listener only
   document.getElementById('reveal-restart').addEventListener('click', () => {
     stopConfetti();
     if (onRestart) onRestart();
-  });
+  }, { signal });
 }
 
 /**
@@ -47,7 +54,6 @@ function startConfetti() {
 
   const colors = ['#ff2d7b', '#a855f7', '#ff6b9d', '#e040fb', '#00e5ff', '#ffd700', '#ff1744', '#22c55e'];
 
-  // Create confetti pieces
   confettiPieces = [];
   for (let i = 0; i < 200; i++) {
     confettiPieces.push({
@@ -76,9 +82,8 @@ function animateConfetti() {
     p.y += p.speedY;
     p.x += p.speedX;
     p.rotation += p.rotSpeed;
-    p.speedY += 0.05; // gravity
+    p.speedY += 0.05;
 
-    // Fade when near bottom
     if (p.y > confettiCanvas.height - 100) {
       p.opacity -= 0.02;
     }
@@ -113,6 +118,10 @@ function stopConfetti() {
  */
 export function resetReveal() {
   stopConfetti();
+  if (abortController) {
+    abortController.abort();
+    abortController = null;
+  }
   document.getElementById('reveal-user-name').textContent = '';
   document.getElementById('reveal-crush-name').textContent = '';
 }

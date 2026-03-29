@@ -31,6 +31,9 @@ let metricsTimeout;
  * @param {Function} onComplete — called with final "score" when done
  */
 export function startProcessing(data, onComplete) {
+  // Kill any leftover intervals from a previous run
+  cleanup();
+
   const statusEl = document.getElementById('process-status');
   const progressFill = document.getElementById('process-progress-fill');
   const percentEl = document.getElementById('process-percent');

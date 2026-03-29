@@ -1,14 +1,22 @@
 /**
  * input.js — Name & Crush Name Input Section
  * Floating label animation, glowing border, validation.
+ * Uses AbortController to prevent duplicate listeners on restart.
  */
 import gsap from 'gsap';
+
+let abortController = null;
 
 /**
  * Initialize input section
  * @param {Function} onSubmit — called with { userName, crushName } object
  */
 export function initInput(onSubmit) {
+  // Abort any previous listeners to prevent duplicates
+  if (abortController) abortController.abort();
+  abortController = new AbortController();
+  const signal = abortController.signal;
+
   const userNameInput = document.getElementById('user-name-input');
   const crushInput = document.getElementById('crush-input');
   const submitBtn = document.getElementById('submit-crush');
@@ -47,7 +55,7 @@ export function initInput(onSubmit) {
     }
 
     if (onSubmit) onSubmit({ userName, crushName });
-  });
+  }, { signal });
 
   // Also allow Enter key on both inputs
   [userNameInput, crushInput].forEach((input) => {
@@ -55,14 +63,18 @@ export function initInput(onSubmit) {
       if (e.key === 'Enter') {
         submitBtn.click();
       }
-    });
+    }, { signal });
   });
 }
 
 /**
- * Reset input fields
+ * Reset input fields and remove listeners
  */
 export function resetInput() {
+  if (abortController) {
+    abortController.abort();
+    abortController = null;
+  }
   document.getElementById('user-name-input').value = '';
   document.getElementById('crush-input').value = '';
 }
